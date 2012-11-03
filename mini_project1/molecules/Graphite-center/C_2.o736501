@@ -1,0 +1,55 @@
+ running on    1 nodes
+ distr:  one band on    1 nodes,    1 groups
+ vasp.5.2.12 11Nov11 complex                                                    
+  
+ POSCAR found :  1 types and       4 ions
+ LDA part: xc-table for Pade appr. of Perdew
+ found WAVECAR, reading the header
+  number of bands has changed, file:    20 present:     8
+  trying to continue reading WAVECAR, but it might fail
+  number of k-points has changed, file:   150 present:    12
+  trying to continue reading WAVECAR, but it might fail
+ WAVECAR: different cutoff or change in lattice found
+ POSCAR, INCAR and KPOINTS ok, starting setup
+ WARNING: small aliasing (wrap around) errors must be expected
+ FFT: planning ...(           1 )
+ reading WAVECAR
+ the WAVECAR file was read sucessfully
+ initial charge from wavefunction
+ entering main loop
+       N       E                     dE             d eps       ncg     rms          rms(c)
+DAV:   1    -0.346935044666E+02   -0.34694E+02   -0.98734E+02   224   0.214E+02    0.238E+00
+DAV:   2    -0.362926460943E+02   -0.15991E+01   -0.16895E+01   232   0.433E+01    0.928E-01
+DAV:   3    -0.368177373280E+02   -0.52509E+00   -0.52267E+00   232   0.556E+00    0.509E-01
+DAV:   4    -0.368350593649E+02   -0.17322E-01   -0.15713E-01   200   0.183E+00    0.386E-02
+DAV:   5    -0.368356524365E+02   -0.59307E-03   -0.54729E-03   168   0.315E-01    0.168E-02
+DAV:   6    -0.368356743015E+02   -0.21865E-04   -0.17243E-04   112   0.103E-01
+
+ ----------------------------------------------------------------------------- 
+|                                                                             |
+|           W    W    AA    RRRRR   N    N  II  N    N   GGGG   !!!           |
+|           W    W   A  A   R    R  NN   N  II  NN   N  G    G  !!!           |
+|           W    W  A    A  R    R  N N  N  II  N N  N  G       !!!           |
+|           W WW W  AAAAAA  RRRRR   N  N N  II  N  N N  G  GGG   !            |
+|           WW  WW  A    A  R   R   N   NN  II  N   NN  G    G                |
+|           W    W  A    A  R    R  N    N  II  N    N   GGGG   !!!           |
+|                                                                             |
+|      Your highest band is occupied at some k-points! Unless you are         |
+|      performing a calculation for an insulator or semiconductor, without    |
+|      unoccupied bands, you have included TOO FEW BANDS!! Please increase    |
+|      the parameter NBANDS in file 'INCAR' to ensure that the highest band   |
+|      is unoccupied at all k-points. It is always recommended to             |
+|      include a few unoccupied bands to accelerate the convergence of        |
+|      molecular dynamics runs (even for insulators or semiconductors).       |
+|      Because the presence of unoccupied bands improves wavefunction         |
+|      prediction, and helps to suppress 'band-crossings.'                    |
+|                                                                             |
+ ----------------------------------------------------------------------------- 
+
+   1 F= -.36835674E+02 E0= -.36835686E+02  d E =-.368357E+02
+ curvature:   0.00 expect dE= 0.000E+00 dE for cont linesearch  0.000E+00
+ trial: gam= 0.00000 g(F)=  0.341E-44 g(S)=  0.000E+00 ort = 0.000E+00 (trialstep = 0.100E+01)
+ search vector abs. value=  0.100E-09
+ reached required accuracy - stopping structural energy minimisation
+ writing wavefunctions
+NPROCS =  1

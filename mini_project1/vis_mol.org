@@ -1,0 +1,92 @@
+#+BEGIN_SRC python
+from jasp import *
+from enthought.mayavi import mlab
+from ase.data import vdw_radii
+from ase.data.colors import cpk_colors
+import numpy as np
+
+
+mol_name = 'CH4'
+
+#Read molecule data from exisiting folder
+with jasp('molecules/{0}-center'.format(mol_name)) as calc:
+    atoms = calc.get_atoms()
+    atoms.center()
+    x, y, z, cd = calc.get_charge_density()
+
+mlab.figure(bgcolor=(1, 1, 1), size=(350,350)) # make a white figure
+
+atoms_x = []
+atoms_y = []
+atoms_z = []
+
+# Plot the atoms as spheres
+for atom in atoms:
+    mlab.points3d(atom.x,
+                 atom.y,
+                atom.z,
+                  scale_factor=vdw_radii[atom.number]/2., #this determines the size of the atom
+                  resolution=20,
+                  # a tuple is required for the color
+                  color=tuple(cpk_colors[atom.number]),
+                  scale_mode='none')
+    atoms_x.append(atom.x)
+    atoms_y.append(atom.y)
+    atoms_z.append(atom.z)
+    #print vdw_radii[atom.number]/2.
+
+#Plot bonds as tubes (only for molecules)
+#Get positions of atom
+bonds_pos = []
+f = open('molecules/{0}-center/OUTCAR'.format(mol_name),'r')
+while ('ion  position' not in f.readline()):
+    pass
+r1 = np.arange(len(atoms_x))
+for i in r1:
+    a = f.readline()
+    data1 = np.fromstring(a,sep='  ')
+    bonds_pos = np.append(bonds_pos,data1[1:])
+    i+=1
+f.close()
+bonds_pos *=10
+
+#Get nearest neighbour list to draw bonds
+f = open('molecules/{0}-center/OUTCAR'.format(mol_name),'r')
+while ('ion  position' not in f.readline()):
+    pass
+r1 = np.arange(len(atoms_x))
+for i in r1:
+    a = f.readline()
+    index = 0
+    for a1 in a:
+        if '-' not in a1:
+            index +=1
+        else:
+            break
+    a2 = a[index+1:]
+    data2 = np.fromstring(a2, sep=' ')
+    r2 = np.arange(0,len(data2),2)
+    for j in r2:
+        ind = int(data2[j])-1
+        mlab.plot3d([bonds_pos[ind*3 + 0],bonds_pos[i*3 + 0]],[bonds_pos[ind*3 + 1],bonds_pos[i*3 + 1]],
+                    [bonds_pos[ind*3 + 2],bonds_pos[i*3 + 2]],tube_radius=0.07, colormap='Reds')
+    i+=1
+f.close()
+
+#Draw electron density as fog
+source = mlab.pipeline.scalar_field(x,y,z,cd)
+min = cd.min()
+max = cd.max()
+vol = mlab.pipeline.volume(source, vmin=min+0.008*(max-min), vmax=min + 0.1*(max-min))
+
+#Save image at different angles
+mlab.view(azimuth=0, elevation=90, distance=10)
+mlab.savefig('images/{0}_1.png'.format(mol_name.lower()))
+mlab.view(azimuth=90, elevation=0, distance=10)
+mlab.savefig('images/{0}_2.png'.format(mol_name.lower()))
+mlab.show()
+
+
+#+END_SRC
+
+#+RESULTS:

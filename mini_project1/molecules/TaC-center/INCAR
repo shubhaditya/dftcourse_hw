@@ -1,0 +1,7 @@
+INCAR created by Atomic Simulation Environment
+ ENCUT = 700.000000
+ SIGMA = 0.010000
+ PREC = Normal
+ NBANDS = 34
+ NSW = 10
+ IBRION = 2
